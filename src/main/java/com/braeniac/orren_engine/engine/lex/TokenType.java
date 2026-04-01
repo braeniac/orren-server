@@ -11,6 +11,6 @@ public enum TokenType {
     DIRECTION,
     SEPARATOR,
     QUOTED_TEXT,
-    UNKNOWN,
+    WORD,
     EOF
 }
