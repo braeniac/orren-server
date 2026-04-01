@@ -8,17 +8,26 @@ import java.util.Set;
 public class Lexer {
 
     private static final Set<String> VERBS = Set.of(
+            //actions
             "take", "grab", "get", "drop", "put", "throw", "give", "look",
             "examine", "inspect", "search", "go", "walk", "run", "enter", "exit",
             "climb", "open", "close", "lock", "unlock", "use", "push",
             "pull", "turn", "attack", "hit", "kill", "fight", "read",
-            "listen", "smell", "touch", "taste", "wear", "remove",
-            "inventory", "i", "save", "s", "restore", "quit", "q", "wait",
-            "sleep", "sense", "dream", "resonate", "attune", "channel", "hum", "echo",
+            "listen", "smell", "touch", "taste", "wear", "remove", "wait",
+            "pick", "move",
+
+            //orren specific
+            "resonate", "attune", "channel", "hum", "echo",
             "forge", "temper", "bind", "amplify", "dampen", "vibrate",
             "strike", "cool", "heat", "extract", "embed", "shatter", "bend", "break",
             "recall", "forget", "awaken", "meditate", "focus", "align", "rotate",
-            "connect", "separate", "pickup", "pick", "move"
+            "connect", "separate", "dream", "sense", "sleep",
+
+            //speech verbs
+            "say", "shout", "whisper", "yell",
+
+            //setting
+            "inventory", "i", "save", "s", "restore", "quit", "q"
     );
 
     private static final Set<String> PREPOSITIONS = Set.of(
@@ -54,17 +63,20 @@ public class Lexer {
 
     private static final Map<String, String> NORMALIZED_VERBS = Map.ofEntries(
             Map.entry("grab", "take"),
-            Map.entry("pickup", "take"),
             Map.entry("pick", "take"),
             Map.entry("pick up", "take"),
+
             Map.entry("inspect", "look"),
             Map.entry("examine", "look"),
             Map.entry("look at", "look"),
             Map.entry("talk to", "talk"),
-            Map.entry("turn on", "talk"),
+
             Map.entry("hit", "strike"),
             Map.entry("fight", "attack"),
+            Map.entry("kill", "attack"),
+
             Map.entry("move", "go"),
+
             Map.entry("i", "inventory"),
             Map.entry("s", "save"),
             Map.entry("q", "quit")
@@ -164,13 +176,13 @@ public class Lexer {
             return new Token(TokenType.SEPARATOR, rawWord, lowered, start, i);
         }
 
-        //direct verb match
-        if (VERBS.contains(lowered)) {
-            return new Token(TokenType.VERB, rawWord, lowered, start, i);
-        }
-
         //normalized verb - verb synonym normalization
         if (NORMALIZED_VERBS.containsKey(lowered)) {
+            return new Token(TokenType.VERB, rawWord, NORMALIZED_VERBS.get(lowered), start, i);
+        }
+
+        //direct verb match
+        if (VERBS.contains(lowered)) {
             return new Token(TokenType.VERB, rawWord, lowered, start, i);
         }
 
@@ -188,6 +200,10 @@ public class Lexer {
 
         if (PRONOUNS.contains(lowered)) {
             return new Token(TokenType.PRONOUN, rawWord, lowered, start, i);
+        }
+
+        if (DIRECTIONS.containsKey(lowered)) {
+            return new Token(TokenType.DIRECTION, rawWord, DIRECTIONS.get(lowered), start, i);
         }
 
         return new Token(TokenType.WORD, rawWord, lowered, start, i);
