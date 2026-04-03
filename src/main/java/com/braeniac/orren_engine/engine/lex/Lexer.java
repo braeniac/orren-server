@@ -27,7 +27,7 @@ public class Lexer {
             "say", "shout", "whisper", "yell",
 
             //setting
-            "inventory", "i", "save", "s", "restore", "quit", "q"
+            "inventory", "i", "save", "restore", "quit", "q"
     );
 
     private static final Set<String> PREPOSITIONS = Set.of(
@@ -61,24 +61,24 @@ public class Lexer {
             Map.entry("d", "down")
     );
 
+    private static final Map<String, String> NORMALIZED_MULTI_WORD_VERBS = Map.ofEntries(
+            Map.entry("pick up", "take"),
+            Map.entry("look at", "look"),
+            Map.entry("talk to", "talk"),
+            Map.entry("turn on", "turn_on"),
+            Map.entry("turn off", "turn_off")
+    );
+
     private static final Map<String, String> NORMALIZED_VERBS = Map.ofEntries(
             Map.entry("grab", "take"),
             Map.entry("pick", "take"),
-            Map.entry("pick up", "take"),
-
             Map.entry("inspect", "look"),
             Map.entry("examine", "look"),
-            Map.entry("look at", "look"),
-            Map.entry("talk to", "talk"),
-
             Map.entry("hit", "strike"),
             Map.entry("fight", "attack"),
             Map.entry("kill", "attack"),
-
             Map.entry("move", "go"),
-
             Map.entry("i", "inventory"),
-            Map.entry("s", "save"),
             Map.entry("q", "quit")
     );
 
@@ -139,24 +139,30 @@ public class Lexer {
                 continue;
             }
 
-            //word scanning
+            //single or multi-word scanning
             if (Character.isLetter(current)) {
-                int start = i;
 
-                while (i < input.length()) {
-                    char ch = input.charAt(i);
-                    if (Character.isLetter(ch) || ch == '-' || ch == '\''){
-                        i++;
-                    } else {
-                        break;
-                    }
+                WordSpan firstWord = readWord(input, i);
+
+                MultiVerbMatch multiWordVerbMatch = tryMatchMultiWordVerb(input, firstWord);
+                if (multiWordVerbMatch != null) {
+                    tokens.add(new Token(
+                        TokenType.VERB,
+                            multiWordVerbMatch.rawText(),
+                            multiWordVerbMatch.normalizedVerb(),
+                            multiWordVerbMatch.startIndex(),
+                            multiWordVerbMatch.endIndex()
+                    ));
+                    i = multiWordVerbMatch.endIndex();
+                    continue;
                 }
 
-                String rawWord = input.substring(start, i);
+                String rawWord = firstWord.rawWord();
                 String lowered = rawWord.toLowerCase();
 
-                Token token = classifyWord(rawWord, lowered, start, i);
+                Token token = classifySingleWord(rawWord, lowered, firstWord.startIndex(), firstWord.endIndex());
                 tokens.add(token);
+                i = firstWord.endIndex();
                 continue;
             }
 
@@ -170,7 +176,7 @@ public class Lexer {
     }
 
 
-    private Token classifyWord(String rawWord, String lowered, int start, int i) {
+    private Token classifySingleWord(String rawWord, String lowered, int start, int i) {
         //multi-command separators written as words
         if (lowered.equals("and") || lowered.equals("then")) {
             return new Token(TokenType.SEPARATOR, rawWord, lowered, start, i);
@@ -209,7 +215,66 @@ public class Lexer {
         return new Token(TokenType.WORD, rawWord, lowered, start, i);
     }
 
+    private WordSpan readWord(String input, int currentIndex) {
+        int i = currentIndex;
+        while (i < input.length()) {
+            char ch = input.charAt(i);
+            if (Character.isLetter(ch) || ch == '-' || ch == '\'') {
+                i++;
+            } else {
+                break;
+            }
+        }
 
+        String rawWord = input.substring(currentIndex, i);
+        return new WordSpan(rawWord, currentIndex, i);
+    }
+
+    private MultiVerbMatch tryMatchMultiWordVerb(String input, WordSpan firstWord) {
+
+        int cursor = firstWord.endIndex();
+
+        //if at current is empty space
+        while (cursor < input.length() && Character.isWhitespace(input.charAt(cursor))) {
+            cursor++;
+        }
+
+        if (cursor >= input.length() || !Character.isLetter(input.charAt(cursor))) {
+            return null;
+        }
+
+        //there must be a second word
+        WordSpan secondWord = readWord(input, cursor);
+
+        String combinedLowered = firstWord.rawWord().toLowerCase() + " " + secondWord.rawWord().toLowerCase();
+
+        String normalizedVerb = NORMALIZED_MULTI_WORD_VERBS.get(combinedLowered);
+
+        if (normalizedVerb == null) return null;
+
+        String rawText = input.substring(firstWord.startIndex, secondWord.endIndex());
+
+        return new MultiVerbMatch(
+                rawText,
+                normalizedVerb,
+                firstWord.startIndex(),
+                secondWord.endIndex()
+        );
+    }
+
+    //WordSpan pojo
+    private record WordSpan(
+            String rawWord,
+            int startIndex,
+            int endIndex
+    ) {}
+
+    //MultiVerbMatch pojo
+    private record MultiVerbMatch(
+            String rawText,
+            String normalizedVerb,
+            int startIndex,
+            int endIndex
+    ) {}
 }
-
 

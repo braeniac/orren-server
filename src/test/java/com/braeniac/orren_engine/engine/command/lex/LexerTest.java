@@ -34,6 +34,17 @@ public class LexerTest {
         assertToken(tokens.get(2), TokenType.EOF, "", "");
     }
 
+    @Test
+    void shouldLexSimpleDirections() {
+        List<Token> tokens = lexer.lex("go s");
+        assertEquals(3, tokens.size());
+
+        assertToken(tokens.get(0), TokenType.VERB, "go", "go");
+        assertToken(tokens.get(1), TokenType.DIRECTION, "s", "south");
+        assertToken(tokens.get(2), TokenType.EOF, "", "");
+
+    }
+
 
     @Test
     void shouldLexSimpleVerbWithQuote() {
@@ -75,8 +86,6 @@ public class LexerTest {
     @Test
     void shouldLexComplexUserCommand() {
         List<Token> tokens = lexer.lex("grab my lantern; open the wooden door, then whisper \"hello\" quietly");
-
-        tokens.forEach(System.out::println);
 
         assertEquals(14, tokens.size());
         assertToken(tokens.get(0), TokenType.VERB, "grab", "take");
