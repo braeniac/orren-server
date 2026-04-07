@@ -12,13 +12,13 @@ public class ASTCommand {
     //whisper, shout, yell
     private final String quotedText; //nullable
     //take the key --> from the wooden chest <--
-    private final List<ASTPrepPhrases> prepPhrases;
+    private final List<ASTPrepPhrase> prepPhrases;
     private String adverb; //nullable
 
     public ASTCommand(String verb,
                       ASTNounPhrase directObjects,
                       String quotedText,
-                      List<ASTPrepPhrases> prepPhrases,
+                      List<ASTPrepPhrase> prepPhrases,
                       String adverb) {
         this.verb = Objects.requireNonNull(verb);
         this.directObjects = directObjects;
@@ -38,7 +38,7 @@ public class ASTCommand {
         return quotedText;
     }
 
-    public List<ASTPrepPhrases> getPrepPhrases() {
+    public List<ASTPrepPhrase> getPrepPhrases() {
         return prepPhrases;
     }
 
@@ -56,4 +56,5 @@ public class ASTCommand {
                 ", adverb='" + adverb + '\'' +
                 '}';
     }
+
 }
