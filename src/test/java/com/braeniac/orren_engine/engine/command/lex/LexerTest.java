@@ -102,7 +102,6 @@ public class LexerTest {
         assertToken(tokens.get(11), TokenType.QUOTED_TEXT, "\"hello\"", "hello");
         assertToken(tokens.get(12), TokenType.ADV, "quietly", "quietly");
         assertToken(tokens.get(13), TokenType.EOF, "", "");
-
     }
 
     @Test

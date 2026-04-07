@@ -13,21 +13,24 @@ public class Lexer {
             "examine", "inspect", "search", "go", "walk", "run", "enter", "exit",
             "climb", "open", "close", "lock", "unlock", "use", "push",
             "pull", "turn", "attack", "hit", "kill", "fight", "read",
-            "listen", "smell", "touch", "taste", "wear", "remove", "wait",
-            "pick", "move",
+            "listen", "smell", "touch", "taste", "drink", "wear", "remove", "wait",
+            "pick", "move", "in", "out", "self", "cut", "jump", "swing",
 
             //orren specific
             "resonate", "attune", "channel", "hum", "echo",
             "forge", "temper", "bind", "amplify", "dampen", "vibrate",
             "strike", "cool", "heat", "extract", "embed", "shatter", "bend", "break",
             "recall", "forget", "awaken", "meditate", "focus", "align", "rotate",
-            "connect", "separate", "dream", "sense", "sleep",
+            "connect", "separate", "dream", "sense", "sleep", "pray",
 
             //speech verbs
             "say", "shout", "whisper", "yell",
 
             //setting
-            "inventory", "i", "save", "restore", "quit", "q"
+            "inventory", "i", "redo", "g",  "save", "restore", "quit", "q", "score",
+            "brief", "verbose"
+
+
     );
 
     private static final Set<String> PREPOSITIONS = Set.of(
@@ -66,12 +69,14 @@ public class Lexer {
             Map.entry("look at", "look"),
             Map.entry("talk to", "talk"),
             Map.entry("turn on", "turn_on"),
-            Map.entry("turn off", "turn_off")
+            Map.entry("turn off", "turn_off"),
+            Map.entry("use on", "use_on")
     );
 
     private static final Map<String, String> NORMALIZED_VERBS = Map.ofEntries(
             Map.entry("grab", "take"),
             Map.entry("pick", "take"),
+            Map.entry("pickup", "take"),
             Map.entry("inspect", "look"),
             Map.entry("examine", "look"),
             Map.entry("hit", "strike"),
