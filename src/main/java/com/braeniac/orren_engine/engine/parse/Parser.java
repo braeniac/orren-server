@@ -24,6 +24,7 @@ import java.util.Objects;
  * prepPhrase =
  *            FROM
  *            nounPhrase = THE OLD CHEST
+ *
  */
 
 
@@ -123,6 +124,17 @@ public class Parser {
             );
         }
 
+        //direction
+        if (match(TokenType.DIRECTION)) {
+            return new ASTNounPhrase(
+                    null,
+                    List.of(),
+                    previous().getNormalizedText(),
+                    null,
+                    List.of()
+            );
+        }
+
         String determiner = null;
         if (match(TokenType.DET)) {
             determiner = previous().getNormalizedText();
@@ -196,7 +208,8 @@ public class Parser {
     private boolean startNounPhrase() {
         return check(TokenType.DET)
                 || check(TokenType.WORD)
-                || check(TokenType.PRONOUN);
+                || check(TokenType.PRONOUN)
+                || check(TokenType.DIRECTION);
     }
 
     private boolean match(TokenType type) {
