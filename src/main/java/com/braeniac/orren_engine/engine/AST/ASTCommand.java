@@ -12,6 +12,8 @@ public class ASTCommand {
     //whisper, shout, yell
     private final String quotedText; //nullable
     //take the key --> from the wooden chest <--
+    //represents a relationship between things.
+    //key from wooden chest.
     private final List<ASTPrepPhrase> prepPhrases;
     private String adverb; //nullable
 

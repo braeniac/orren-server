@@ -30,7 +30,6 @@ public class Lexer {
             "inventory", "i", "redo", "g",  "save", "restore", "quit", "q", "score",
             "brief", "verbose"
 
-
     );
 
     private static final Set<String> PREPOSITIONS = Set.of(
@@ -82,6 +81,7 @@ public class Lexer {
             Map.entry("hit", "strike"),
             Map.entry("fight", "attack"),
             Map.entry("kill", "attack"),
+            Map.entry("shout", "yell"),
             Map.entry("move", "go"),
             Map.entry("i", "inventory"),
             Map.entry("q", "quit")
