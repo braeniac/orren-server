@@ -1,15 +1,13 @@
-package com.braeniac.orren_engine.engine.command.parse;
+package com.braeniac.orren_engine.engine.model.parse;
 
 import com.braeniac.orren_engine.engine.AST.ASTCommandSequence;
 import com.braeniac.orren_engine.engine.AST.ASTCommand;
 import com.braeniac.orren_engine.engine.AST.ASTNounPhrase;
-import com.braeniac.orren_engine.engine.AST.ASTPrepPhrase;
 import com.braeniac.orren_engine.engine.lex.Lexer;
 import com.braeniac.orren_engine.engine.lex.Token;
 import com.braeniac.orren_engine.engine.parse.ParseException;
 import com.braeniac.orren_engine.engine.parse.Parser;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
@@ -117,6 +115,33 @@ public class ParserTest {
     }
 
     @Test
+    void shouldWorkWithMultipleCommands() {
+        String input = "take key, open door, go north";
+        List<Token> tokens = lexer.lex(input);
+//        tokens.forEach(System.out::println);
+
+        Parser parser = new Parser(tokens, 0);
+        ASTCommandSequence ast = parser.parseCommandSequence();
+
+//        System.out.println(ast);
+
+        assertEquals(3, ast.getCommands().size());
+
+        ASTCommand commandA = ast.getCommands().get(0);
+        assertEquals("take", commandA.getVerb());
+        assertEquals("key", commandA.getDirectObjects().getHead());
+
+        ASTCommand commandB = ast.getCommands().get(1);
+        assertEquals("open", commandB.getVerb());
+        assertEquals("door", commandB.getDirectObjects().getHead());
+
+        ASTCommand commandC = ast.getCommands().get(2);
+        assertEquals("go", commandC.getVerb());
+        assertEquals("north", commandC.getDirectObjects().getHead());
+
+    }
+
+    @Test
     void shouldThrowWhenSpeechCommandHasNoQuote() {
 
         String input = "say lantern";
@@ -145,6 +170,9 @@ public class ParserTest {
 
         assertTrue(ex.getMessage().contains("Expected a verb"));
     }
+
+
+
 
 }
 

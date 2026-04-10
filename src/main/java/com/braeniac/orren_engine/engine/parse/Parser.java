@@ -35,11 +35,12 @@ public class Parser {
 
     public Parser(List<Token> tokens, int current) {
         this.tokens = List.copyOf(Objects.requireNonNull(tokens));
-        this.current = 0;
+        this.current = current;
     }
 
     public ASTCommandSequence parseCommandSequence() {
         List<ASTCommand> commands = new ArrayList<>();
+
         commands.add(parseCommand());
 
         while(match(TokenType.SEPARATOR)) {

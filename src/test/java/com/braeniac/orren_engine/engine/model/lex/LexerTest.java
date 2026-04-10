@@ -1,4 +1,4 @@
-package com.braeniac.orren_engine.engine.command.lex;
+package com.braeniac.orren_engine.engine.model.lex;
 
 import com.braeniac.orren_engine.engine.lex.TokenType;
 import com.braeniac.orren_engine.engine.lex.Lexer;
@@ -43,6 +43,18 @@ public class LexerTest {
         assertToken(tokens.get(1), TokenType.DIRECTION, "s", "south");
         assertToken(tokens.get(2), TokenType.EOF, "", "");
 
+    }
+
+
+    //this test fails.
+    @Test
+    void shouldReturnSingleEofForBlankInput() {
+        Lexer lexer = new Lexer();
+
+        List<Token> tokens = lexer.lex("   ");
+
+        assertEquals(1, tokens.size(), "Blank input should produce exactly one EOF token");
+        assertEquals(TokenType.EOF, tokens.get(0).getType());
     }
 
 

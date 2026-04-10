@@ -26,6 +26,7 @@ public class ASTCommand {
         this.directObjects = directObjects;
         this.quotedText = quotedText;
         this.prepPhrases = List.copyOf(Objects.requireNonNull(prepPhrases));
+        this.adverb = adverb;
     }
 
     public String getVerb() {
