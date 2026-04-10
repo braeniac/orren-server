@@ -13,7 +13,7 @@ import java.util.Objects;
  * Examples:
  *
  * "take the small bronze key from the old chest"
- * domain = INTERACTION
+ * domain = MANIPULATION
  * verb = take
  * directTarget = key
  * modifier = [ from chest ]
@@ -75,7 +75,7 @@ public class UserCommand {
     }
 
     public boolean hasQuotedText() {
-        return quotedText != null; 
+        return quotedText != null;
     }
 
     @Override
