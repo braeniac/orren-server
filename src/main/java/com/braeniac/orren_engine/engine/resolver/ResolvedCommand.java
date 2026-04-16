@@ -1,6 +1,5 @@
 package com.braeniac.orren_engine.engine.resolver;
-
-import com.braeniac.orren_engine.api.v1.dto.Model;
+import com.braeniac.orren_engine.engine.model.Model;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class ResolvedCommand {
                            List<ResolvedModifier> modifiersList,
                            String adverbs) {
         this.domain = Objects.requireNonNull(domain);
-        this.verb = Obijects.requireNonNull(verb);
+        this.verb = Objects.requireNonNull(verb);
         this.directObject = directObject;
         this.quotedText = quotedText;
         this.modifiersList = List.copyOf(Objects.requireNonNull(modifiersList));

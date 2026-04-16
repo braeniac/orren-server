@@ -1,6 +1,8 @@
 package com.braeniac.orren_engine.engine.model;
 
-import org.apache.catalina.User;
+import com.braeniac.orren_engine.engine.model.CommandModifier;
+import com.braeniac.orren_engine.engine.model.CommandTarget;
+import com.braeniac.orren_engine.engine.model.Model;
 
 import java.util.List;
 import java.util.Objects;
