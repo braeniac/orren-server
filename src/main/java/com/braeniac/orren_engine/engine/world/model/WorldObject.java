@@ -12,9 +12,9 @@ public class WorldObject {
     public WorldObject(final String name,
                        final String ID,
                        final List<String> aliases) {
-        this.name = Objects.requireNonNull(name);
-        this.ID = Objects.requireNonNull(ID);
-        this.aliases = List.copyOf(Objects.requireNonNull(aliases));
+        this.name = Objects.requireNonNull(name, "Name must not be null");
+        this.ID = Objects.requireNonNull(ID, "id must not be null");
+        this.aliases = List.copyOf(Objects.requireNonNull(aliases, "aliases must not be null"));
     }
 
     public String getName() {

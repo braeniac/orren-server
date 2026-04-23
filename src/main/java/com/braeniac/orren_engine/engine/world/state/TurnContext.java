@@ -5,23 +5,37 @@ import com.braeniac.orren_engine.engine.world.model.WorldObject;
 import java.util.List;
 import java.util.Objects;
 
-public class TurnContext {
-    // player
-    // current room
-    // visible objects
-    // inventory
-    // last referenced object ("it")
+public final class TurnContext {
+    private final List<WorldObject> visibleObjects;
+    private final List<WorldObject> inventoryObjects;
+    private final WorldObject lastReferencedObject; // nullable
 
-    private List<WorldObject> visibleObjects;
-    private List<WorldObject> inventoryObjects;
-    private  WorldObject lastReferencedObject;
+    public TurnContext(
+            List<WorldObject> visibleObjects,
+            List<WorldObject> inventoryObjects,
+            WorldObject lastReferencedObject
+    ) {
+        // These lists should always exist, even if empty.
+        // They represent the current search scope for object resolution.
+        this.visibleObjects = List.copyOf(
+                Objects.requireNonNull(visibleObjects, "visibleObjects must not be null")
+        );
 
-    public TurnContext(List<WorldObject> visibleObjects,
-                       List<WorldObject> inventoryObjects,
-                       WorldObject lastReferencedObject) {
-        this.visibleObjects = List.copyOf(Objects.requireNonNull(visibleObjects ,"Visible objects must not be null"));
-        this.inventoryObjects = List.copyOf(Objects.requireNonNull(inventoryObjects, "Inventory objects must not be null"));
-        this.lastReferencedObject = Objects.requireNonNull(lastReferencedObject);
+        this.inventoryObjects = List.copyOf(
+                Objects.requireNonNull(inventoryObjects, "inventoryObjects must not be null")
+        );
+
+        // This is intentionally allowed to be null.
+        //
+        // Why:
+        // Some turns do not reference any prior object yet.
+        // Example:
+        //   say "hello"
+        //   look
+        //   wait
+        //
+        // Pronoun resolution ("it") may use this later, but not every command needs it.
+        this.lastReferencedObject = lastReferencedObject;
     }
 
     public List<WorldObject> getVisibleObjects() {
@@ -36,19 +50,10 @@ public class TurnContext {
         return lastReferencedObject;
     }
 
-    //concats objects currently available in current room plus what's already in your inventory.
     public List<WorldObject> getAccessibleObjects() {
-        return java.util.stream.Stream.concat(visibleObjects.stream(), inventoryObjects.stream())
+        return java.util.stream.Stream
+                .concat(visibleObjects.stream(), inventoryObjects.stream())
                 .distinct()
                 .toList();
-    }
-
-    @Override
-    public String toString() {
-        return "TurnContext{" +
-                "visibleObjects=" + visibleObjects +
-                ", inventoryObjects=" + inventoryObjects +
-                ", lastReferencedObject=" + lastReferencedObject +
-                '}';
     }
 }
