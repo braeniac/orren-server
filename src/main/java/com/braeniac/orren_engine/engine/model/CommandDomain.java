@@ -1,6 +1,6 @@
 package com.braeniac.orren_engine.engine.model;
 
-public enum Model {
+public enum CommandDomain {
     MOVEMENT,
     MANIPULATION,
     INVENTORY,

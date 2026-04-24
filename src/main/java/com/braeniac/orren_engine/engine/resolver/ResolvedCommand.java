@@ -1,5 +1,5 @@
 package com.braeniac.orren_engine.engine.resolver;
-import com.braeniac.orren_engine.engine.model.Model;
+import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
 
 import java.util.List;
@@ -12,14 +12,14 @@ import java.util.Objects;
  *
  */
 public class ResolvedCommand {
-    private final Model domain;
+    private final CommandDomain domain;
     private final String verb;
     private final WorldObject directObject; //nullable
     private final String quotedText; //nullable
     private final List<ResolvedModifier> modifiersList; //nullable
     private String adverbs; //nullable
 
-    public ResolvedCommand(Model domain,
+    public ResolvedCommand(CommandDomain domain,
                            String verb,
                            WorldObject directObject,
                            String quotedText,
@@ -33,7 +33,7 @@ public class ResolvedCommand {
         this.adverbs = adverbs;
     }
 
-    public Model getDomain() {
+    public CommandDomain getDomain() {
         return domain;
     }
 

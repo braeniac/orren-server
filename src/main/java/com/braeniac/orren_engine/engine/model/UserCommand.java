@@ -1,9 +1,5 @@
 package com.braeniac.orren_engine.engine.model;
 
-import com.braeniac.orren_engine.engine.model.CommandModifier;
-import com.braeniac.orren_engine.engine.model.CommandTarget;
-import com.braeniac.orren_engine.engine.model.Model;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -27,14 +23,14 @@ import java.util.Objects;
  */
 
 public class UserCommand {
-    private final Model domain;
+    private final CommandDomain domain;
     private final String verb;
     private final CommandTarget directTarget;
     private final String quotedText;
     private final List<CommandModifier> modifierList;
     private final String adverb;
 
-    public UserCommand(Model domain,
+    public UserCommand(CommandDomain domain,
                        String verb,
                        CommandTarget directTarget,
                        String quotedText,
@@ -48,7 +44,7 @@ public class UserCommand {
         this.adverb = adverb;
     }
 
-    public Model getDomain() {
+    public CommandDomain getDomain() {
         return domain;
     }
 

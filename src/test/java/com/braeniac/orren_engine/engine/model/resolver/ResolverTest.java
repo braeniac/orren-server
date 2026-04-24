@@ -2,7 +2,7 @@ package com.braeniac.orren_engine.engine.model.resolver;
 
 import com.braeniac.orren_engine.engine.model.CommandModifier;
 import com.braeniac.orren_engine.engine.model.CommandTarget;
-import com.braeniac.orren_engine.engine.model.Model;
+import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.model.UserCommand;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
 import com.braeniac.orren_engine.engine.resolver.Resolver;
@@ -51,7 +51,7 @@ class SimpleReferenceResolverTest {
         // Represents a command like:
         // open the iron door
         UserCommand command = new UserCommand(
-                Model.MANIPULATION,
+                CommandDomain.MANIPULATION,
                 "open",
                 new CommandTarget("the", List.of("iron"), "door", null),
                 null,
@@ -92,7 +92,7 @@ class SimpleReferenceResolverTest {
         // Represents:
         // unlock door with key
         UserCommand command = new UserCommand(
-                Model.MANIPULATION,
+                CommandDomain.MANIPULATION,
                 "unlock",
                 new CommandTarget(null, List.of(), "door", null),
                 null,
@@ -138,7 +138,7 @@ class SimpleReferenceResolverTest {
         // Represents:
         // unlock door with it
         UserCommand command = new UserCommand(
-                Model.MANIPULATION,
+                CommandDomain.MANIPULATION,
                 "unlock",
                 new CommandTarget(null, List.of(), "door", null),
                 null,
@@ -171,7 +171,7 @@ class SimpleReferenceResolverTest {
         // open door
         // But there is no door in scope.
         UserCommand command = new UserCommand(
-                Model.MANIPULATION,
+                CommandDomain.MANIPULATION,
                 "open",
                 new CommandTarget(null, List.of(), "door", null),
                 null,
@@ -210,7 +210,7 @@ class SimpleReferenceResolverTest {
         // Represents:
         // take bronze key
         UserCommand command = new UserCommand(
-                Model.MANIPULATION,
+                CommandDomain.MANIPULATION,
                 "take",
                 new CommandTarget(null, List.of("bronze"), "key", null),
                 null,
@@ -235,7 +235,7 @@ class SimpleReferenceResolverTest {
         // Represents:
         // say "open the gate"
         UserCommand command = new UserCommand(
-                Model.SPEECH,
+                CommandDomain.SPEECH,
                 "say",
                 null,
                 "open the gate",
@@ -246,7 +246,7 @@ class SimpleReferenceResolverTest {
         ResolvedCommand resolved = resolver.resolve(command, turnContext);
 
         assertNotNull(resolved);
-        assertEquals(Model.SPEECH, resolved.getDomain());
+        assertEquals(CommandDomain.SPEECH, resolved.getDomain());
         assertEquals("say", resolved.getVerb());
         assertNull(resolved.getDirectObject());
         assertEquals("open the gate", resolved.getQuotedText());

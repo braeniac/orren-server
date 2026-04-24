@@ -137,7 +137,6 @@ public class Resolver implements ReferencedResolver {
                 .map(this::normalize)
                 .toList();
 
-
         //matching the noun
         //if the user types "key"
         //what we're asking is "does the object seem to be a key?"
