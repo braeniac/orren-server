@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
+//the player needs to track
+// - current room
+// - inventory
+
+//TODO-----
+// add health, flags, achievements, equipped items.
+
 public class Player {
 
     private String currentRoomId;
@@ -38,5 +46,5 @@ public class Player {
     public boolean hasInventory(WorldObject object) {
         return inventory.contains(object);
     }
-    
+
 }
