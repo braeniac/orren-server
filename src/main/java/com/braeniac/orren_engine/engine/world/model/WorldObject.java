@@ -14,7 +14,7 @@ public class WorldObject {
                        final String ID,
                        final String description,
                        final List<String> aliases) {
-        this.name = Objects.requireNonNull(name, "Name must not be null");
+        this.name = Objects.requireNonNull(name, "name must not be null");
         this.ID = Objects.requireNonNull(ID, "id must not be null");
         this.description = Objects.requireNonNull(description, "description must not be null");
 

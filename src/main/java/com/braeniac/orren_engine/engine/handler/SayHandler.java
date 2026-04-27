@@ -2,6 +2,7 @@ package com.braeniac.orren_engine.engine.handler;
 
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
+import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 //handles speech command
 // - say "hello"
@@ -21,7 +22,7 @@ public class SayHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command) {
+    public String handle(ResolvedCommand command, WorldState worldState) {
         if (!"say".equals(command.getVerb())) {
             throw new IllegalArgumentException("SayHandler can only handle verb 'say'.");
         }

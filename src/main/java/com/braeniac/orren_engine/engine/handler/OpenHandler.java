@@ -3,6 +3,7 @@ package com.braeniac.orren_engine.engine.handler;
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
+import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 
 // handles "open" commands
@@ -21,7 +22,7 @@ public class OpenHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command) {
+    public String handle(ResolvedCommand command, WorldState worldState) {
         if (!"open".equals(command.getVerb())) {
             throw new IllegalArgumentException("OpenHandler can only handle verb 'open'.");
         }

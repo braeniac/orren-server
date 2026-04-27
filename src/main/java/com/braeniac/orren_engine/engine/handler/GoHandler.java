@@ -3,6 +3,7 @@ package com.braeniac.orren_engine.engine.handler;
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
+import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 
 //handles movement commands like:
@@ -16,7 +17,7 @@ public class GoHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command) {
+    public String handle(ResolvedCommand command, WorldState worldState) {
 
         if (!"go".equals(command.getVerb())) {
             throw new IllegalArgumentException("GoHandler can only handle verb 'go'.");

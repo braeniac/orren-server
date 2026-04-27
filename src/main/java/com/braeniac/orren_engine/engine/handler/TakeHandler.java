@@ -3,6 +3,7 @@ package com.braeniac.orren_engine.engine.handler;
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
+import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 public class TakeHandler implements Handler{
     @Override
@@ -11,7 +12,7 @@ public class TakeHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command) {
+    public String handle(ResolvedCommand command, WorldState worldState) {
         //defensive check
         //this handler is specifically for the verb "take"
         //if the router sends the wrong verb here, we fail clearly.
