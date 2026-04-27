@@ -35,7 +35,7 @@ public class WorldState {
             addRoom(room);
         }
     }
-    
+
     public Player getPlayer() {
         return player;
     }

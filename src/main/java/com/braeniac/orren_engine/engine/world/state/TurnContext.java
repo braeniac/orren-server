@@ -1,30 +1,21 @@
 package com.braeniac.orren_engine.engine.world.state;
 
+import com.braeniac.orren_engine.engine.world.model.Room;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class TurnContext {
-    private final List<WorldObject> visibleObjects;
-    private final List<WorldObject> inventoryObjects;
+    private final WorldState worldState;
     private final WorldObject lastReferencedObject; // nullable
 
     public TurnContext(
-            List<WorldObject> visibleObjects,
-            List<WorldObject> inventoryObjects,
+            WorldState worldState,
             WorldObject lastReferencedObject
     ) {
-        // These lists should always exist, even if empty.
-        // They represent the current search scope for object resolution.
-        this.visibleObjects = List.copyOf(
-                Objects.requireNonNull(visibleObjects, "visibleObjects must not be null")
-        );
 
-        this.inventoryObjects = List.copyOf(
-                Objects.requireNonNull(inventoryObjects, "inventoryObjects must not be null")
-        );
-
+        this.worldState = Objects.requireNonNull(worldState, "worldState must not be null");
         // This is intentionally allowed to be null.
         //
         // Why:
@@ -39,11 +30,18 @@ public final class TurnContext {
     }
 
     public List<WorldObject> getVisibleObjects() {
-        return visibleObjects;
+
+        Room currentRoom = worldState.getCurrentRoom();
+
+        if (currentRoom == null) {
+            return List.of();
+        }
+
+        return currentRoom.getObjects();
     }
 
     public List<WorldObject> getInventoryObjects() {
-        return inventoryObjects;
+        return worldState.getPlayer().getInventory();
     }
 
     public WorldObject getLastReferencedObject() {
@@ -52,7 +50,8 @@ public final class TurnContext {
 
     public List<WorldObject> getAccessibleObjects() {
         return java.util.stream.Stream
-                .concat(visibleObjects.stream(), inventoryObjects.stream())
+                .concat(getVisibleObjects().stream(),
+                        getInventoryObjects().stream())
                 .distinct()
                 .toList();
     }
