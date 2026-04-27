@@ -7,7 +7,6 @@ import com.braeniac.orren_engine.engine.world.model.Portable;
 import com.braeniac.orren_engine.engine.world.model.Room;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
 import com.braeniac.orren_engine.engine.world.state.TurnContext;
-import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 public class TakeHandler implements Handler{
     @Override
