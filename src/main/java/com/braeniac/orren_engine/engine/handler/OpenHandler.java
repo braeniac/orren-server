@@ -2,7 +2,10 @@ package com.braeniac.orren_engine.engine.handler;
 
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
+import com.braeniac.orren_engine.engine.world.model.Openable;
+import com.braeniac.orren_engine.engine.world.model.Portable;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
+import com.braeniac.orren_engine.engine.world.state.TurnContext;
 import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 
@@ -22,7 +25,7 @@ public class OpenHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command, WorldState worldState) {
+    public String handle(ResolvedCommand command, TurnContext turnContext) {
         if (!"open".equals(command.getVerb())) {
             throw new IllegalArgumentException("OpenHandler can only handle verb 'open'.");
         }
@@ -33,13 +36,20 @@ public class OpenHandler implements Handler{
             return "Open what?";
         }
 
+        //is the object openable (like chest).
+        if (!(directObject instanceof Openable openable)) {
+            return "You can't open that " + directObject.getName() + " .";
+        }
 
-        //TODO ----------------------------------------------
-        // right now we just return a narrative text
-        // later we want to:
-        // - instanceOf openable check
-        // - locked checks
-        // - state transitions
+        //chest is openable but does it require a key?
+        //if the directObject is open
+        if (openable.isOpen()) {
+            return "The " + directObject.getName() + " is already open.";
+        }
+
+        //the directObject implemented Openable so its up to the object if it's in an open/closed state.
+        openable.open();
+
         return "You open the " + directObject.getName() + " .";
     }
 

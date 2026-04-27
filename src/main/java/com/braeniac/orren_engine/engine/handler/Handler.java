@@ -2,6 +2,7 @@ package com.braeniac.orren_engine.engine.handler;
 
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
+import com.braeniac.orren_engine.engine.world.state.TurnContext;
 import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 //base contract for all the command handlers.
@@ -24,7 +25,7 @@ public interface Handler {
     // EXAMPLE
     // "You take the bronze key."
     // "The iron door is already open."
-    String handle(ResolvedCommand command, WorldState worldState);
+    String handle(ResolvedCommand command, TurnContext turnContext);
 
     //a quick yes or no check before dispatching a command.
     default boolean supports(ResolvedCommand command) {

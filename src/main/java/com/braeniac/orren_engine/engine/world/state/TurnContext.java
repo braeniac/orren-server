@@ -48,6 +48,10 @@ public final class TurnContext {
         return lastReferencedObject;
     }
 
+    public WorldState getWorldState() {
+        return worldState;
+    }
+
     public List<WorldObject> getAccessibleObjects() {
         return java.util.stream.Stream
                 .concat(getVisibleObjects().stream(),

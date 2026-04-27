@@ -3,6 +3,7 @@ package com.braeniac.orren_engine.engine.handler;
 import com.braeniac.orren_engine.engine.model.CommandDomain;
 import com.braeniac.orren_engine.engine.resolver.ResolvedCommand;
 import com.braeniac.orren_engine.engine.world.model.WorldObject;
+import com.braeniac.orren_engine.engine.world.state.TurnContext;
 import com.braeniac.orren_engine.engine.world.state.WorldState;
 
 //handles 'look' commands.
@@ -18,7 +19,7 @@ public class LookHandler implements Handler{
     }
 
     @Override
-    public String handle(ResolvedCommand command, WorldState worldState) {
+    public String handle(ResolvedCommand command, TurnContext turnContext) {
         if (!"look".equals(command.getVerb())) {
             throw new IllegalArgumentException("LookHandler can only handle verb 'look'.");
         }
