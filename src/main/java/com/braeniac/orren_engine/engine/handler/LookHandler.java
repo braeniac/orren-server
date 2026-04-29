@@ -48,6 +48,11 @@ public class LookHandler implements Handler{
 
     }
 
+    @Override
+    public String getVerb() {
+        return "look";
+    }
+
     //describe the object in room or in inventory.
     private String describeObject(WorldObject directObject) {
         String description = directObject.getDescription();

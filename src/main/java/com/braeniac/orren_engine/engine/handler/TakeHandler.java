@@ -49,6 +49,12 @@ public class TakeHandler implements Handler{
         return "You take the " + directObject.getName() + ".";
     }
 
+
+    @Override
+    public String getVerb() {
+        return "take";
+    }
+
     @Override
     public boolean supports(ResolvedCommand command) {
         return Handler.super.supports(command);

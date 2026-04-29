@@ -43,6 +43,12 @@ public class GoHandler implements Handler{
         return "You go " + directObject + " .";
     }
 
+
+    @Override
+    public String getVerb() {
+        return "go";
+    }
+
     @Override
     public boolean supports(ResolvedCommand command) {
         return Handler.super.supports(command);

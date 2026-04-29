@@ -53,6 +53,12 @@ public class OpenHandler implements Handler{
         return "You open the " + directObject.getName() + " .";
     }
 
+
+    @Override
+    public String getVerb() {
+        return "open";
+    }
+
     @Override
     public boolean supports(ResolvedCommand command) {
         return Handler.super.supports(command);

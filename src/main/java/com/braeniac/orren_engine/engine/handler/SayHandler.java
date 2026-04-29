@@ -45,6 +45,12 @@ public class SayHandler implements Handler{
 
     }
 
+
+    @Override
+    public String getVerb() {
+        return "say";
+    }
+
     @Override
     public boolean supports(ResolvedCommand command) {
         return Handler.super.supports(command);

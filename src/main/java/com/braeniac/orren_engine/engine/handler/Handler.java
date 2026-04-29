@@ -27,6 +27,8 @@ public interface Handler {
     // "The iron door is already open."
     String handle(ResolvedCommand command, TurnContext turnContext);
 
+    String getVerb();
+
     //a quick yes or no check before dispatching a command.
     default boolean supports(ResolvedCommand command) {
         return command != null && command.getDomain() == getSupportedDomain();
