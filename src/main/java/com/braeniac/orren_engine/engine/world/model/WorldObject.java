@@ -10,8 +10,8 @@ public class WorldObject {
     private final String description;
     private final List<String> aliases;
 
-    public WorldObject(final String name,
-                       final String ID,
+    public WorldObject(final String ID,
+                       final String name,
                        final String description,
                        final List<String> aliases) {
         this.name = Objects.requireNonNull(name, "name must not be null");
