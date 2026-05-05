@@ -57,6 +57,15 @@ public class Room {
         return exits.get(direction);
     }
 
+
+    public void addExit(String direction, String destinationRoomId) {
+        exits.put(
+                Objects.requireNonNull(direction, "direction must not be null"),
+                Objects.requireNonNull(destinationRoomId, "destinationRoomId must not be null")
+        );
+    }
+
+
     public Map<String, String> getExits() {
         return Map.copyOf(exits);
     }

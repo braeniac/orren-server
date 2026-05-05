@@ -40,7 +40,7 @@ public class LookHandler implements Handler{
         Room currentRoom = turnContext.getWorldState().getCurrentRoom();
 
         if (currentRoom == null)
-            return "You're nowhere.";
+            return "You are nowhere.";
 
         //if an object is present, we treat this as focused inspection
         //later this can call object-specific description logic.

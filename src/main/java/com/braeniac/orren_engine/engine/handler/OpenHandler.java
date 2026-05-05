@@ -38,7 +38,7 @@ public class OpenHandler implements Handler{
 
         //is the object openable (like chest).
         if (!(directObject instanceof Openable openable)) {
-            return "You can't open that " + directObject.getName() + " .";
+            return "You can't open the " + directObject.getName() + ".";
         }
 
         //chest is openable but does it require a key?
@@ -50,7 +50,7 @@ public class OpenHandler implements Handler{
         //the directObject implemented Openable so its up to the object if it's in an open/closed state.
         openable.open();
 
-        return "You open the " + directObject.getName() + " .";
+        return "You open the " + directObject.getName() + ".";
     }
 
 
